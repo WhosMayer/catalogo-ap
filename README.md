@@ -68,3 +68,14 @@ Para comprobar la aplicación:
 4. Probar una ciudad desconocida y un documento o correo ya registrado; comprobar los mensajes de validación.
 5. Iniciar sesión, abrir los detalles de distintos productos y cerrar sesión.
 6. Guardar un cambio en `main` y comprobar su ejecución en Jenkins y publicación en la aplicación.
+
+## Cuenta de prueba
+
+Para entrar en la aplicación local: [Iniciar sesión](http://localhost/catalogo-ap/login.php).
+
+| Campo | Valor |
+| --- | --- |
+| Correo | `practica.20261025@example.test` |
+| Contraseña | `Prueba!2026-Catalogo` |
+
+Esta cuenta se creó en la base de datos local utilizada para la práctica. Al instalar el proyecto en otro equipo, debe registrarse la cuenta desde el formulario antes de usar estas credenciales. Es una cuenta de demostración; no contiene datos personales reales.
