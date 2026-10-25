@@ -19,7 +19,7 @@ if(isset($_SESSION['user_id'])) {
         <div class="row justify-content-center align-items-center min-vh-100">
             <div class="col-md-6 text-center">
                 <h1 class="display-4 mb-4">Catálogo de Productos en Promoción</h1>
-                <p class="badge bg-success">Versión 1.1 · Registro mejorado y detalles de productos</p><p class="lead mb-5">Descubre las mejores ofertas en tecnología y accesorios</p>
+                <p class="badge bg-success">Versión 1.2 · Integración Git + Jenkins activa</p><p class="lead mb-5">Descubre las mejores ofertas en tecnología y accesorios</p>
                 <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
                     <a href="login.php" class="btn btn-primary btn-lg px-4">Iniciar Sesión</a>
                     <a href="registro.php" class="btn btn-outline-primary btn-lg px-4">Registrarse</a>
