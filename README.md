@@ -1,61 +1,70 @@
-# Catálogo-ap — práctica Git + Jenkins
+# Catálogo-ap
 
-## Cambios implementados
-- Registro con valores conservados tras errores, resumen con enlaces, mensaje junto a cada campo y foco en el primer error. Las contraseñas se conservan solo en la respuesta del formulario, nunca en logs ni archivos; usar HTTPS fuera del equipo local.
-- Catálogo de 24 ciudades de Colombia, Italia y Francia. Acepta selección o escritura con diferencias de mayúsculas y tildes. El país se calcula también en PHP: modificar el país enviado no altera el guardado.
-- Cada botón Ver detalles despliega los datos de su producto sin depender de JavaScript ni de Bootstrap.
-- Cambio visible en inicio: insignia «Versión 1.1 · Registro mejorado y detalles de productos».
-- Pipeline con checkout del repositorio configurado, revisión PHP, pruebas, artefacto y publicación en XAMPP. Solo publica después de aprobar las pruebas.
+Aplicación web en PHP y MySQL para el registro de usuarios y la consulta de productos en promoción, con integración y entrega continua mediante Git y Jenkins.
 
-## Ejecutar en XAMPP
-1. Copiar esta carpeta a `C:/xampp/htdocs/catalogo-ap` y arrancar Apache y MySQL.
-2. Importar `sql/database.sql` en MySQL (una sola vez; los INSERT originales duplican productos al repetirse).
-3. Abrir http://localhost/catalogo-ap/ y crear una cuenta.
-4. La conexión usa por defecto 127.0.0.1, base catalogo_db, usuario root y contraseña vacía, como el proyecto original. Se puede configurar mediante variables del proceso Apache: DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD. No incluir claves en Git.
-5. Las promociones originales tienen fechas de 2026: si ya expiraron, actualizar la vigencia en la base de datos para la demostración.
+## Integrantes
 
-## Grupo de 3 o 4 integrantes
-Completar con nombres reales antes de entregar:
+| Nombre | Rol |
+| --- | --- |
+| Mayer Gómez | Líder del grupo |
+| Santiago Salamanca | Integrante |
+| Milton Muñoz | Integrante |
 
-| Rol | Responsable | Trabajo y evidencia |
-| --- | --- | --- |
-| Líder / integración | Por asignar | Distribuir tareas, revisar cambios, integrar ramas, configurar Jenkins y registrar builds |
-| Registro | Por asignar | Persistencia de campos, errores y ciudades; pruebas de inscripción |
-| Catálogo | Por asignar | Detalles, cambio visible y pruebas de productos |
-| Pruebas / entrega (opcional) | Por asignar | Verificación, capturas y documentación |
+## Funcionalidades
 
-Con 3 integrantes, el líder asume también pruebas y entrega. Cada integrante debe realizar sus propios commits reales; el historial preparado aquí no sustituye la colaboración del grupo.
+- Registro de usuarios con validación por campo. Si hay errores, el formulario conserva la información ingresada y muestra dónde corregirla.
+- Catálogo de 24 ciudades de Colombia, Italia y Francia. Al seleccionar o escribir una ciudad, se completa su país. La relación también se valida en el servidor.
+- Inicio y cierre de sesión.
+- Consulta de productos en promoción y botones «Ver detalles» con descripción, categoría, precios, vigencia y referencia del producto.
 
-## Conectar Git y Jenkins
-Requisitos: Jenkins con plugins Pipeline, Git y PowerShell; agente Windows con etiqueta `windows`, Git y PHP (pdo_mysql), XAMPP. El usuario del servicio Jenkins necesita permiso de escritura en la carpeta de publicación.
+## Instalación
 
-El ZIP original incluye historial Git y el remoto https://github.com/jhonrot/catalogo-ap.git. Confirmar que pertenece al grupo antes de publicar. Se conservó ese historial y se añadieron dos commits de implementación; no se ha realizado push. El archivo catalogo-ap-historial.bundle permite recuperar el historial con git clone catalogo-ap-historial.bundle catalogo-ap.
+Requisitos: XAMPP con Apache, MySQL y PHP, además de Git para trabajar con el repositorio.
 
-1. Crear un repositorio vacío en su proveedor Git y asociarlo desde esta carpeta:
-   ```powershell
-   git remote set-url origin URL_REAL_DEL_REPOSITORIO
-   git push -u origin main
+1. Clonar el repositorio:
+   ```bash
+   git clone https://github.com/WhosMayer/catalogo-ap.git
    ```
-2. Crear en Jenkins un trabajo **Pipeline**. Seleccionar **Pipeline script from SCM → Git**, URL real del repositorio, credenciales si es privado, rama `*/main` y Script Path `Jenkinsfile`.
-3. Ejecutar **Build Now**. Revisar los parámetros PHP_EXE y DEPLOY_DIR antes de ejecutar. La publicación sobrescribe archivos de la aplicación en esa carpeta: usar una carpeta dedicada a esta práctica.
-4. Desde el primer build, el pipeline consulta Git cada 2 minutos. Solo genera otro build cuando encuentra cambios. Para la demostración, editar el texto de versión de index.php, hacer commit y push; esperar la consulta o pulsar Build Now.
-5. Abrir la aplicación en XAMPP y verificar la insignia cambiada. Abrir http://localhost/catalogo-ap/version.txt para asociar el build y commit publicados.
-6. En Jenkins revisar **Build History**, **Changes**, **Console Output** y los artefactos de cada ejecución. Guardar capturas del primer build y del build del cambio visible. Jenkins guarda hasta 20 ejecuciones.
+2. Ubicar el proyecto en `C:/xampp/htdocs/catalogo-ap`.
+3. Iniciar Apache y MySQL desde XAMPP.
+4. Importar `sql/database.sql` una sola vez. Repetir la importación puede duplicar los productos de ejemplo.
+5. Abrir [Catálogo-ap](http://localhost/catalogo-ap/), registrarse e iniciar sesión.
 
-## Ramas y revisión del líder
-Cada integrante crea una rama desde main (`git switch -c feature/registro`, por ejemplo), realiza su implementación, pruebas, commit y push. El líder revisa y une las ramas mediante pull requests o merge. Ejecutar `git log --oneline --graph --all` para evidenciar la integración. Evitar que dos personas modifiquen el mismo archivo sin coordinarse.
+La conexión predeterminada utiliza el servidor `127.0.0.1`, puerto `3306`, base de datos `catalogo_db`, usuario `root` y contraseña vacía. Puede configurarse con las variables `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER` y `DB_PASSWORD` del proceso de Apache.
 
-## Verificación
+Los productos se muestran únicamente cuando están activos y dentro de su periodo de promoción.
+
+## Integración con Jenkins
+
+- Repositorio: [WhosMayer/catalogo-ap](https://github.com/WhosMayer/catalogo-ap).
+- Rama: `main`.
+- Tipo de tarea: **Pipeline script from SCM**, con Git como origen y `Jenkinsfile` como archivo de configuración.
+- Tarea local: [catalogo-ap](http://localhost:8080/job/catalogo-ap/).
+
+Jenkins consulta el repositorio cada dos minutos. Cuando detecta cambios, descarga el código, revisa la sintaxis PHP, ejecuta las pruebas de registro, genera un ZIP y publica la aplicación en XAMPP. Si fallan las comprobaciones, no realiza la publicación.
+
+Parámetros de la tarea:
+
+| Parámetro | Valor |
+| --- | --- |
+| `PHP_EXE` | `C:/xampp/php/php.exe` |
+| `DEPLOY_DIR` | `C:/xampp/htdocs/catalogo-ap` |
+
+El historial de ejecuciones, los cambios y los resultados se consultan en Jenkins. El archivo publicado `version.txt` identifica la ejecución y el commit correspondientes a la aplicación. Se conservan hasta 20 ejecuciones.
+
+## Pruebas
+
+Ejecutar desde la carpeta del proyecto:
+
 ```powershell
 C:/xampp/php/php.exe ci/check.php
 ```
-Pruebas manuales de aceptación:
-- Introducir datos completos, correo incorrecto y confirmación distinta: al enviar deben mantenerse todos los datos y aparecer errores junto al correo y confirmación. Corregir y registrarse.
-- Repetir documento/correo existentes: el error debe indicar el campo; los datos permanecen.
-- Seleccionar Roma, Bogotá y París: deben completar Italia, Colombia y Francia. Escribir una ciudad desconocida: debe rechazarse. Borrar la ciudad: se limpia el país.
-- Iniciar sesión y abrir detalles de dos productos: nombre, descripción, categoría, precios, vigencia y referencia deben corresponder a cada tarjeta. Cerrar sesión.
-- Hacer push de un cambio de texto y comprobar nuevo build y texto publicado.
 
-## Estado de entrega
-El código y el repositorio local están preparados. La ejecución real en Jenkins, el push al repositorio remoto y las capturas de su historial requieren la URL del repositorio, acceso al Jenkins del grupo y servicios disponibles. No se incluyen capturas ni builds ficticios.
+Para comprobar la aplicación:
 
+1. Enviar el registro con un correo inválido y contraseñas distintas; verificar que los datos permanezcan y se señalen ambos errores.
+2. Corregir los campos y completar el registro.
+3. Seleccionar Roma, Bogotá y París; comprobar Italia, Colombia y Francia respectivamente.
+4. Probar una ciudad desconocida y un documento o correo ya registrado; comprobar los mensajes de validación.
+5. Iniciar sesión, abrir los detalles de distintos productos y cerrar sesión.
+6. Guardar un cambio en `main` y comprobar su ejecución en Jenkins y publicación en la aplicación.
