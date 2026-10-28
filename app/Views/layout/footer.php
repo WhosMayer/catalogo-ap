@@ -1,0 +1,1 @@
+<footer class="site-footer wrap"><a class="brand footer-brand" href="index.php">catálogo.</a><p>Tecnología que te gusta. Ofertas que aprovechas.</p><span>Colombia · Italia · Francia</span></footer><script src="assets/app.js" defer></script></body></html>
