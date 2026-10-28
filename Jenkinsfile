@@ -13,7 +13,7 @@ pipeline {
             steps {
                 powershell '''
                     New-Item -ItemType Directory -Force -Path build | Out-Null
-                    $archivos = @('index.php','login.php','Logout.php','registro.php','catalogo.php','config','includes','assets')
+                    $archivos = @('index.php','login.php','Logout.php','registro.php','catalogo.php','config','includes','assets','app')
                     Compress-Archive -Path $archivos -DestinationPath build/catalogo-ap.zip -Force
                     "Build: $env:BUILD_NUMBER`nCommit: $env:GIT_COMMIT`nURL: $env:BUILD_URL" | Set-Content build/version.txt
                 '''
@@ -37,4 +37,3 @@ pipeline {
         failure { echo 'La ejecución falló. Consulta Console Output; si fallan las pruebas no se publica.' }
     }
 }
-
