@@ -79,3 +79,14 @@ Para entrar en la aplicación local: [Iniciar sesión](http://localhost/catalogo
 | Contraseña | `Prueba!2026-Catalogo` |
 
 Esta cuenta se creó en la base de datos local utilizada para la práctica. Al instalar el proyecto en otro equipo, debe registrarse la cuenta desde el formulario antes de usar estas credenciales. Es una cuenta de demostración; no contiene datos personales reales.
+
+## Arquitectura MVC
+
+- `app/Models/`: consultas y operaciones de usuarios y productos en MySQL.
+- `app/Controllers/`: procesamiento de formularios, validación, sesiones y preparación de datos.
+- `app/Views/`: páginas y componentes HTML compartidos.
+- `app/bootstrap.php`: inicio de sesión, carga de clases y funciones de presentación.
+- `includes/registro.php`: funciones reutilizables de validación y catálogo de ciudades.
+- `assets/`: estilos y comportamiento del navegador.
+
+Los archivos PHP de la raíz son los puntos de entrada; delegan al controlador y conservan las direcciones de la aplicación. Las vistas no ejecutan consultas SQL y los modelos no generan HTML.
